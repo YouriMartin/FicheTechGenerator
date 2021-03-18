@@ -22,14 +22,14 @@
 export default {
   name: "TableBox",
   props: ["showTable", "toggleTable"],
-  data() {
+  data: () => {
     return {
       colNumber: null,
       rowNumber: null,
     };
   },
   methods: {
-    createTab() {
+    createTab: function () {
       const tableParam = {
         colNumber: this.colNumber,
         rowNumber: this.rowNumber,

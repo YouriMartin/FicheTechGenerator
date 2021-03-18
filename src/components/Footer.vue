@@ -1,18 +1,5 @@
 <template>
   <div id="footer">
-    <!-- <div id="footerTop">
-      <div class="footerItems">
-        <h6>Informations :</h6>
-      </div>
-      <div class="footerItems">
-        <h6>Contacts :</h6>
-        <i class="fab fa-github-square"></i>
-        <i class="fas fa-envelope"></i>
-      </div>
-      <div class="footerItems">
-        <h6>Liens :</h6>
-      </div>
-    </div> -->
     <div id="footerBottom">
       <p>&copy; {{ getYear }} Copyright: FichetechGenerator.com</p>
     </div>
@@ -36,17 +23,8 @@ export default {
   background-color: #1e1e1e;
   width: 100%;
   height: 2vh;
+}
 
-}
-#footerTop {
-  background-color: #bcbcbc;
-  height: 80%;
-  width: 100%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-evenly;
-  font-size: 20px;
-}
 #footerBottom {
   font-size: 10px;
   display: inline-flex;

@@ -15,7 +15,7 @@ import jsPDF from "jspdf";
 
 export default {
   name: "Generator",
-  data: function () {
+  data: () => {
     return {
       bandname: "",
     };
@@ -27,13 +27,12 @@ export default {
   methods: {
     createPdf() {
       window.scrollTo(0, 0);
-      let feuilleId = document.getElementById("feuille");
+      const feuilleId = document.getElementById("feuille");
       feuilleId.classList.remove("shadow");
-      let feuilleRender = document.querySelector("#feuille");
-      html2canvas(feuilleRender, { background: "#ffffff" }).then((canvas) => {
+      const feuilleRender = document.querySelector("#feuille");
+      html2canvas(feuilleRender, { scale: 2 }).then((canvas) => {
         const pdf = new jsPDF();
         const rendu = canvas.toDataURL("image/png", 1.0);
-        console.log(this.value);
         pdf.addImage(rendu, "PNG", 0, 0, 210, 300);
         pdf.save("FicheTech_" + this.bandname + ".pdf");
         feuilleId.classList.add("shadow");

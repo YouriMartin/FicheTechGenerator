@@ -24,7 +24,7 @@ import Login from "@/components/Login.vue";
 
 export default {
   name: "Home",
-  data() {
+  data: () => {
     return {
       revele: false,
       signin: false,
@@ -60,7 +60,6 @@ export default {
   flex-direction: column;
 }
 #loginHome {
-
   width: 350px;
   display: flex;
   justify-content: space-evenly;

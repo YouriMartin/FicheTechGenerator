@@ -35,7 +35,7 @@
 import Login from "@/components/Login.vue";
 export default {
   name: "NavBar",
-  data() {
+  data: () => {
     return {
       revele: false,
       signin: false,

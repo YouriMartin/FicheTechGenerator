@@ -45,8 +45,9 @@ table {
   top: -5%;
   margin-bottom: -40px;
   border-collapse: collapse;
-  
+  border: black 1px solid;
 }
+
 td {
   border: black 1px solid;
   height: 9px;

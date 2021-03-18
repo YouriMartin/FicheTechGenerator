@@ -78,7 +78,7 @@ export default {
   components: { TableBox },
   name: "Feuille",
   props: ["bandname"],
-  data() {
+  data: () => {
     return {
       showTable: false,
     };
@@ -106,16 +106,16 @@ export default {
     createTable: function () {
       if (this.$store.state.tableParam !== null) {
         document.getElementById("tableIcon").style.display = "none";
-        let row = this.$store.state.tableParam.rowNumber - 1;
-        let col = this.$store.state.tableParam.colNumber - 1;
-        let table = document.createElement("table");
-        let patch = document.getElementById("patch");
-        let tbdy = document.createElement("tbody");
-        for (var i = 0; i <= row; i++) {
-          var tr = document.createElement("tr");
-          for (var j = 0; j <= col; j++) {
-            var td = document.createElement("td");
-            var input = document.createElement("input");
+        const row = this.$store.state.tableParam.rowNumber - 1;
+        const col = this.$store.state.tableParam.colNumber - 1;
+        const table = document.createElement("table");
+        const patch = document.getElementById("patch");
+        const tbdy = document.createElement("tbody");
+        for (let i = 0; i <= row; i++) {
+          const tr = document.createElement("tr");
+          for (let j = 0; j <= col; j++) {
+            const td = document.createElement("td");
+            const input = document.createElement("input");
             input.size = "7";
             input.classList.add("inputPatch");
             td.appendChild(input);
@@ -129,7 +129,7 @@ export default {
       }
     },
   },
-  updated: function () {
+  updated: () => {
     Draggable.create(".iconsIn", {
       type: "x,y",
       bounds: document.getElementById("stage"),
