@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-    <div id="footerTop">
+    <!-- <div id="footerTop">
       <div class="footerItems">
         <h6>Informations :</h6>
       </div>
@@ -12,7 +12,7 @@
       <div class="footerItems">
         <h6>Liens :</h6>
       </div>
-    </div>
+    </div> -->
     <div id="footerBottom">
       <p>&copy; {{ getYear }} Copyright: FichetechGenerator.com</p>
     </div>
@@ -35,8 +35,8 @@ export default {
 #footer {
   background-color: #1e1e1e;
   width: 100%;
-  height: 15vh;
- /* grid-area: footer;*/
+  height: 2vh;
+
 }
 #footerTop {
   background-color: #bcbcbc;

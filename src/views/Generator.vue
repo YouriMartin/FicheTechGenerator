@@ -1,7 +1,7 @@
 <template>
   <div id="generator">
     <ToolsBox />
-    <Feuille />
+    <Feuille v-model="bandname" />
     <div class="buttonBox">
       <button @click="createPdf">Sauvegarder</button>
     </div>
@@ -15,6 +15,11 @@ import jsPDF from "jspdf";
 
 export default {
   name: "Generator",
+  data: function () {
+    return {
+      bandname: "",
+    };
+  },
   components: {
     ToolsBox,
     Feuille,
@@ -28,8 +33,9 @@ export default {
       html2canvas(feuilleRender, { background: "#ffffff" }).then((canvas) => {
         const pdf = new jsPDF();
         const rendu = canvas.toDataURL("image/png", 1.0);
+        console.log(this.value);
         pdf.addImage(rendu, "PNG", 0, 0, 210, 300);
-        pdf.save("FicheTech_" + this.bandName + ".pdf");
+        pdf.save("FicheTech_" + this.bandname + ".pdf");
         feuilleId.classList.add("shadow");
       });
     },
@@ -51,6 +57,11 @@ export default {
   padding: 20px;
   border: 2px solid black;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: background-color 0.3s ease-in-out;
+  transition-delay: 10ms;
+}
+.buttonBox:hover {
+  background-color: black;
 }
 button {
   background-color: black;
@@ -59,5 +70,13 @@ button {
   text-align: center;
   text-decoration: none;
   padding: 15px 32px;
+  transition: background-color 0.3s ease-in-out;
+  transition-delay: 10ms;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+.buttonBox:hover button {
+  color: black;
+  background-color: white;
 }
 </style>

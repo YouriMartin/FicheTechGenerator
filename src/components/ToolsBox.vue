@@ -1,13 +1,13 @@
 <template>
   <div id="toolsbox">
-    <div id="firstGrid" class="gridElement">
+    <div class="gridElement">
       <i id="drum" class="fas fa-drum icons"></i>
     </div>
-    <div id="secondGrid" class="gridElement">
-      <i id="table" class="fas fa-table icons"></i>
-    </div>
-    <div id="thirdGrid" class="gridElement">
+    <div class="gridElement">
       <i id="guitar" class="fas fa-guitar icons"></i>
+    </div>
+    <div class="gridElement">
+      <i id="elec" class="fas fa-plug icons"></i>
     </div>
   </div>
 </template>

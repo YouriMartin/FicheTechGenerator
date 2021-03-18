@@ -3,23 +3,28 @@
     <div id="header">
       <h2>
         Fiche Technique
-        <input type="text" v-model="bandName" placeholder="Nom Groupe" />
+        <input
+          type="text"
+          v-bind:bandname="bandname"
+          v-on:input="updateName($event.target.value)"
+          placeholder="Nom du Groupe"
+        />
       </h2>
       <h4>Contact:</h4>
       <div class="contactForm">
-        <label for="nom">Nom</label>
-        <input class="nom" type="text" placeholder="Jean Dupont" />
-        <label for="email">Email :</label>
-        <input class="email" type="text" placeholder="JeanDupont@gmail.com" />
-        <label for="phone">Télephone :</label>
+        <label for="nom">Nom : </label>
+        <input class="nom" type="text" placeholder="Exemple Nom" />
+        <label for="email">Email : </label>
+        <input class="email" type="text" placeholder="exemple@gmail.com" />
+        <label for="phone">Télephone : </label>
         <input class="phone" type="text" placeholder="0611223344" />
       </div>
       <div class="contactForm">
-        <label for="nom">Nom</label>
-        <input class="nom" type="text" placeholder="Jean Dupont" />
-        <label for="email">Email :</label>
-        <input class="email" type="text" placeholder="JeanDupont@gmail.com" />
-        <label for="phone">Télephone :</label>
+        <label for="nom">Nom : </label>
+        <input class="nom" type="text" placeholder="Exemple Nom" />
+        <label for="email">Email : </label>
+        <input class="email" type="text" placeholder="exemple@gmail.com" />
+        <label for="phone">Télephone : </label>
         <input class="phone" type="text" placeholder="0611223344" />
       </div>
       <div id="headfoot">
@@ -34,22 +39,13 @@
       </div>
     </div>
     <div id="patch">
-      <table>
-        <tr>
-          <td>&nbsp;</td>
-          <td>PLACEMENT</td>
-          <td>Effet</td>
-          <td>INSERT</td>
-          <td>DI</td>
-        </tr>
-        <tr>
-          <td><input type="text" placeholder="1" size="1" /></td>
-          <td><input type="text" placeholder="kick" size="1" /></td>
-          <td><input type="text" placeholder="/" size="1" /></td>
-          <td><input type="text" placeholder="comp" size="1" /></td>
-          <td><input type="text" placeholder="/" size="1" /></td>
-        </tr>
-      </table>
+      <h4>Patch :</h4>
+      <i id="tableIcon" class="fas fa-table" v-on:click="toggleTable()"></i>
+      <TableBox
+        v-bind:showTable="showTable"
+        v-bind:toggleTable="toggleTable"
+        @create-table="createTable"
+      />
     </div>
     <div id="info">
       <div class="infoCompenents">
@@ -58,26 +54,33 @@
       </div>
       <div class="infoCompenents">
         <h6>Matériel à fournir :</h6>
-        <textarea></textarea>
+        <textarea rows="8"></textarea>
       </div>
       <div class="infoCompenents">
         <h6>Autre :</h6>
-        <textarea></textarea>
+        <textarea rows="8"></textarea>
       </div>
     </div>
     <div id="stage">
       <i v-for="item in itemDraggable" :key="item" :class="item"></i>
+      <img id="trash" src="../assets/trash.png" alt="trash" />
+    </div>
+    <div id="webAdresse">
+      <h6>www.FicheTechGenerator.com</h6>
     </div>
   </div>
 </template>
 
 <script>
 import Draggable from "gsap/Draggable";
+import TableBox from "./TableBox.vue";
 export default {
+  components: { TableBox },
   name: "Feuille",
-  data: function () {
+  props: ["bandname"],
+  data() {
     return {
-      bandName: null,
+      showTable: false,
     };
   },
   computed: {
@@ -85,10 +88,64 @@ export default {
       return this.$store.state.itemInStage;
     },
   },
+  methods: {
+    updateName: function (value) {
+      this.$emit("input", value);
+    },
+    toggleTable: function () {
+      this.showTable = !this.showTable;
+      const tableIconDisplay = document.getElementById("tableIcon");
+      if (this.showTable === true) {
+        tableIconDisplay.style.display = "none";
+      } else if (this.$store.state.tableParam !== null) {
+        tableIconDisplay.style.display = "none";
+      } else {
+        tableIconDisplay.style.display = "block";
+      }
+    },
+    createTable: function () {
+      if (this.$store.state.tableParam !== null) {
+        document.getElementById("tableIcon").style.display = "none";
+        let row = this.$store.state.tableParam.rowNumber - 1;
+        let col = this.$store.state.tableParam.colNumber - 1;
+        let table = document.createElement("table");
+        let patch = document.getElementById("patch");
+        let tbdy = document.createElement("tbody");
+        for (var i = 0; i <= row; i++) {
+          var tr = document.createElement("tr");
+          for (var j = 0; j <= col; j++) {
+            var td = document.createElement("td");
+            var input = document.createElement("input");
+            input.size = "7";
+            input.classList.add("inputPatch");
+            td.appendChild(input);
+            tr.appendChild(td);
+          }
+          tbdy.appendChild(tr);
+        }
+        table.appendChild(tbdy);
+        patch.appendChild(table);
+        document.getElementById("tableIcon").style.display = "none";
+      }
+    },
+  },
   updated: function () {
     Draggable.create(".iconsIn", {
       type: "x,y",
       bounds: document.getElementById("stage"),
+      onDragStart: function () {
+        document.getElementById("trash").style.display = "block";
+      },
+      onRelease: function () {
+        if (this.hitTest("#trash")) {
+          this.target.remove();
+          document.getElementById("trash").style.display = "none";
+        } else {
+          setTimeout(() => {
+            document.getElementById("trash").style.display = "none";
+          }, 200);
+        }
+      },
     });
   },
 };
@@ -102,6 +159,7 @@ export default {
   grid-template-areas:
     "header header header header"
     "patch patch sidebar sidebar"
+    "stage stage stage stage"
     "footer footer footer footer";
 
   padding: 30px;
@@ -123,6 +181,7 @@ input {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   grid-area: header;
+  height: 250px;
 }
 .contactForm {
   margin: 10px;
@@ -142,12 +201,19 @@ h2 input {
 
 #patch {
   grid-area: patch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
-table {
-  width: 250px;
-}
-td {
-  border: 1px solid black;
+
+#tableIcon {
+  position: relative;
+  font-size: 50px;
+
+  top: -100px;
+  cursor: pointer;
+  display: block;
 }
 
 #info {
@@ -158,21 +224,27 @@ td {
 textarea {
   margin-top: -20px;
   width: 98%;
-  height: 50%;
+  height: 80%;
   resize: none;
+  overflow: hidden;
 }
 
 #stage {
-  margin: 50px;
-  grid-area: footer;
+  grid-area: stage;
   font-size: 40px;
   border: 2px solid black;
+  margin: 20px;
 }
+
 #trash {
-  font-size: 20px;
   position: relative;
-  top: 10px;
-  left: 680px;
-  display: block;
+  top: -30px;
+  left: 700px;
+  display: none;
+}
+#webAdresse {
+  text-align: center;
+  grid-area: footer;
+  height: 10px;
 }
 </style>

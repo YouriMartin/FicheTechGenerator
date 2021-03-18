@@ -40,4 +40,20 @@ export default {
   grid-area: main;
   height: 100%;
 }
+table {
+  position: relative;
+  top: -5%;
+  margin-bottom: -40px;
+  border-collapse: collapse;
+  
+}
+td {
+  border: black 1px solid;
+  height: 9px;
+  padding: 0;
+}
+.inputPatch {
+  font-size: 12px;
+  border: none;
+}
 </style>
