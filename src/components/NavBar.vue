@@ -8,8 +8,8 @@
     >
     <div id="navItems">
       <router-link class="navLink" to="/generator">Générateur</router-link>
-      <router-link class="navLink" to="/fichetechlist"
-        >Mes Fiches Tech</router-link
+      <router-link class="navLink" to="/myacount"
+        >Mon Compte</router-link
       >
       <router-link class="navLink" to="/apropos">À propos de </router-link>
     </div>

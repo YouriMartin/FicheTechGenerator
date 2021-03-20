@@ -69,13 +69,13 @@ i:hover {
 }
 @keyframes ihover {
   30% {
-    transform: rotate(0.1turn);
+    transform: rotate(0.08turn);
   }
   60% {
     transform: initial;
   }
   90% {
-    transform: rotate(-0.1turn);
+    transform: rotate(-0.08turn);
   }
 }
 button {

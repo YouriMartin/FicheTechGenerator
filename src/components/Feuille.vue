@@ -2,39 +2,50 @@
   <div id="feuille" class="shadow">
     <div id="header">
       <h2>
-        Fiche Technique
+        Fiche Technique :
         <input
           type="text"
           v-bind:bandname="bandname"
           v-on:input="updateName($event.target.value)"
           placeholder="Nom du Groupe"
+          size="11"
         />
       </h2>
       <h4>Contact:</h4>
       <div class="contactForm">
         <label for="nom">Nom : </label>
-        <input class="nom" type="text" placeholder="Exemple Nom" />
+        <input class="nom" type="text" placeholder="Exemple Nom" size="20" />
         <label for="email">Email : </label>
-        <input class="email" type="text" placeholder="exemple@gmail.com" />
+        <input
+          class="email"
+          type="text"
+          placeholder="exemple@gmail.com"
+          size="20"
+        />
         <label for="phone">Télephone : </label>
-        <input class="phone" type="text" placeholder="0611223344" />
+        <input class="phone" type="text" placeholder="0611223344" size="10" />
       </div>
       <div class="contactForm">
         <label for="nom">Nom : </label>
-        <input class="nom" type="text" placeholder="Exemple Nom" />
+        <input class="nom" type="text" placeholder="Exemple Nom" size="20" />
         <label for="email">Email : </label>
-        <input class="email" type="text" placeholder="exemple@gmail.com" />
+        <input
+          class="email"
+          type="text"
+          placeholder="exemple@gmail.com"
+          size="20"
+        />
         <label for="phone">Télephone : </label>
-        <input class="phone" type="text" placeholder="0611223344" />
+        <input class="phone" type="text" placeholder="0611223344" size="9" />
       </div>
       <div id="headfoot">
         <h4>
           SET:
-          <input type="text" placeholder="1h30" />
+          <input type="text" placeholder="1h30" size="5" />
         </h4>
         <h4>
           Balance:
-          <input type="text" placeholder="30min" />
+          <input type="text" placeholder="30min" size="5" />
         </h4>
       </div>
     </div>
@@ -97,26 +108,34 @@ export default {
       const tableIconDisplay = document.getElementById("tableIcon");
       if (this.showTable === true) {
         tableIconDisplay.style.display = "none";
-      } else if (this.$store.state.tableParam !== null) {
+      } else if (
+        this.$store.state.tableParam.rowNumber !== null &&
+        this.$store.state.tableParam.colNumber !== null
+      ) {
         tableIconDisplay.style.display = "none";
       } else {
         tableIconDisplay.style.display = "block";
       }
     },
     createTable: function () {
-      if (this.$store.state.tableParam !== null) {
+      if (
+        this.$store.state.tableParam.rowNumber !== null &&
+        this.$store.state.tableParam.colNumber !== null
+      ) {
         document.getElementById("tableIcon").style.display = "none";
-        const row = this.$store.state.tableParam.rowNumber - 1;
-        const col = this.$store.state.tableParam.colNumber - 1;
+        const row = this.$store.state.tableParam.rowNumber;
+        const col = this.$store.state.tableParam.colNumber;
         const table = document.createElement("table");
         const patch = document.getElementById("patch");
         const tbdy = document.createElement("tbody");
         for (let i = 0; i <= row; i++) {
           const tr = document.createElement("tr");
-          for (let j = 0; j <= col; j++) {
+          tr.classList.add("ligneCol");
+          for (let j = 0; j < col; j++) {
             const td = document.createElement("td");
             const input = document.createElement("input");
             input.size = "7";
+            input.maxLength = 10;
             input.classList.add("inputPatch");
             td.appendChild(input);
             tr.appendChild(td);
@@ -125,6 +144,39 @@ export default {
         }
         table.appendChild(tbdy);
         patch.appendChild(table);
+        // remplir les value par défault
+        const rowInTable = document.getElementsByClassName("ligneCol");
+        const allInputTable = document.getElementsByClassName("inputPatch");
+        //valeur colone
+        switch (col) {
+          case "2":
+            allInputTable[1].value = "Instruments";
+            break;
+          case "3":
+            allInputTable[1].value = "Instruments";
+            allInputTable[2].value = "Microphones";
+            break;
+          case "4":
+            allInputTable[1].value = "Instruments";
+            allInputTable[2].value = "Microphones";
+            allInputTable[3].value = "Inserts";
+            break;
+          case "5":
+            allInputTable[1].value = "Instruments";
+            allInputTable[2].value = "Microphones";
+            allInputTable[3].value = "Inserts";
+            allInputTable[4].value = "Pieds";
+            break;
+        }
+        //valeur ligne
+        let rowNumber = 0;
+        rowInTable.forEach((row) => {
+          row.cells[0].getElementsByClassName(
+            "inputPatch"
+          )[0].value = rowNumber;
+          rowNumber++;
+        });
+
         document.getElementById("tableIcon").style.display = "none";
       }
     },
@@ -161,12 +213,12 @@ export default {
     "patch patch sidebar sidebar"
     "stage stage stage stage"
     "footer footer footer footer";
-
   padding: 30px;
   margin: 30px 30px;
   background-color: white;
   width: 827px;
   height: 1170px;
+  letter-spacing: 1px;
 }
 .shadow {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -181,7 +233,7 @@ input {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   grid-area: header;
-  height: 250px;
+  height: 240px;
 }
 .contactForm {
   margin: 10px;
@@ -191,7 +243,9 @@ h2 {
   font-size: 25px;
 }
 h2 input {
-  font-size: 25px;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 #headfoot {
   display: inline-flex;
@@ -205,17 +259,32 @@ h2 input {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  height: 560px;
 }
 
 #tableIcon {
   position: relative;
   font-size: 50px;
-
   top: -100px;
   cursor: pointer;
   display: block;
 }
-
+#tableIcon:hover {
+  font-size: 55px;
+  animation-name: tableIconHover;
+  animation-duration: 0.3s;
+}
+@keyframes tableIconHover {
+  30% {
+    transform: rotate(0.05turn);
+  }
+  60% {
+    transform: initial;
+  }
+  90% {
+    transform: rotate(-0.05turn);
+  }
+}
 #info {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
@@ -223,7 +292,7 @@ h2 input {
 }
 textarea {
   margin-top: -20px;
-  width: 98%;
+  width: 94%;
   height: 80%;
   resize: none;
   overflow: hidden;

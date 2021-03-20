@@ -21,6 +21,14 @@ export default {
     const that = this; // pour que le this.$store fonctione
     Draggable.create(".icons", {
       type: "x,y",
+      onDragStart: function () {
+        const stageElement = document.getElementById("stage");
+        stageElement.style.boxShadow = "rgba(31, 226, 255, 0.5) 0px 0px 30px";
+      },
+      onDragEnd: function () {
+        const stageElement = document.getElementById("stage");
+        stageElement.style.boxShadow = "none";
+      },
       onRelease: function () {
         if (this.hitTest("#stage")) {
           const newIconsClassName = this.target.className + "In";

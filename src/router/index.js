@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Generator from '../views/Generator.vue'
-import Fichelist from '../views/Fichelist.vue'
+import Myacount from '../views/Myacount.vue'
 import Apropos from '../views/Apropos.vue'
 
 
@@ -20,9 +20,9 @@ const routes = [
     component: Generator
   },
   {
-    path: '/fichelist',
-    name: 'Fichelist',
-    component: Fichelist
+    path: '/myacount',
+    name: 'Myacount',
+    component: Myacount
   },
   {
     path: '/apropos',

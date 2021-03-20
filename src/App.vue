@@ -49,12 +49,16 @@ table {
 }
 
 td {
-  border: black 1px solid;
-  height: 9px;
+  height: 12px;
   padding: 0;
 }
 .inputPatch {
+  border: black 1px solid;
   font-size: 12px;
-  border: none;
+  height: 100%;
+  text-align: center;
+}
+.inputPatch:focus {
+  outline: none;
 }
 </style>

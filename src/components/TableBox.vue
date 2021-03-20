@@ -1,7 +1,6 @@
 <template>
   <div id="tableBox" v-if="showTable">
     <i class="fas fa-times" v-on:click="toggleTable"></i>
-    <h4>Patch :</h4>
     <div id="tableForm">
       <div class="formElement">
         <label for="colone"> Nombre de colone : </label>
@@ -53,12 +52,13 @@ export default {
 
 <style scoped>
 #tableBox {
-  height: 90%;
+  height: 80%;
   width: 90%;
-  border: 2px solid rgb(17, 60, 200, 0.5);
   box-shadow: rgba(17, 60, 200, 0.35) 0px 5px 15px;
   border-radius: 10px;
   text-align: center;
+  background: white;
+  z-index: 1000;
 }
 i {
   position: relative;
@@ -85,14 +85,14 @@ i:hover {
   }
 }
 #tableForm {
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
 .formElement {
-  height: 20%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -100,5 +100,21 @@ i:hover {
 }
 .alerte {
   color: red;
+}
+button {
+  margin-top: -10%;
+  background-color: white;
+  transition: background-color 0.3s ease-in-out;
+  border: none;
+  padding: 10px 30px;
+  color: black;
+  font-size: 14px;
+  border: 2px solid black;
+  letter-spacing: 1px;
+
+}
+button:hover{
+  background-color: black;
+  color: white;
 }
 </style>
